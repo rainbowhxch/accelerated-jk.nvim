@@ -5,8 +5,8 @@ function TimeDrivenAcceleration:new(config)
         key_count = 0,
         j_timestamp = {0, 0},
         k_timestamp = {0, 0},
-        h_timestamp = {0, 0},
-        l_timestamp = {0, 0},
+        gj_timestamp = {0, 0},
+        gk_timestamp = {0, 0},
         acceleration_table = config.acceleration_table,
         deceleration_table = config.deceleration_table,
         end_of_count = config.acceleration_table[#config.acceleration_table],
@@ -22,10 +22,10 @@ function TimeDrivenAcceleration:get_previous_timestamp(movement)
         return self.j_timestamp
     elseif movement == 'k' then
         return self.k_timestamp
-    elseif movement == 'h' then
-        return self.h_timestamp
-    elseif movement == 'l' then
-        return self.l_timestamp
+    elseif movement == 'gj' then
+        return self.gj_timestamp
+    elseif movement == 'gk' then
+        return self.gk_timestamp
     end
 end
 
@@ -34,10 +34,10 @@ function TimeDrivenAcceleration:set_previous_timestamp(movement, new_timestamp)
         self.j_timestamp = new_timestamp
     elseif movement == 'k' then
         self.k_timestamp = new_timestamp
-    elseif movement == 'h' then
-        self.h_timestamp = new_timestamp
-    elseif movement == 'l' then
-        self.l_timestamp = new_timestamp
+    elseif movement == 'gj' then
+        self.gj_timestamp = new_timestamp
+    elseif movement == 'gk' then
+        self.gk_timestamp = new_timestamp
     end
 end
 
