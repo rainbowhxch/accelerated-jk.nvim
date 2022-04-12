@@ -1,0 +1,15 @@
+accelerated-jk	accelerated-jk.txt	/*accelerated-jk*
+accelerated-jk-configuration	accelerated-jk.txt	/*accelerated-jk-configuration*
+accelerated-jk-installation	accelerated-jk.txt	/*accelerated-jk-installation*
+accelerated-jk-introduction	accelerated-jk.txt	/*accelerated-jk-introduction*
+accelerated-jk-license	accelerated-jk.txt	/*accelerated-jk-license*
+accelerated-jk-mappings	accelerated-jk.txt	/*accelerated-jk-mappings*
+accelerated-jk-modes	accelerated-jk.txt	/*accelerated-jk-modes*
+accelerated-jk-requirements	accelerated-jk.txt	/*accelerated-jk-requirements*
+accelerated-jk-usage	accelerated-jk.txt	/*accelerated-jk-usage*
+accelerated-jk.txt	accelerated-jk.txt	/*accelerated-jk.txt*
+acceleration_limit	accelerated-jk.txt	/*acceleration_limit*
+acceleration_table	accelerated-jk.txt	/*acceleration_table*
+deceleration_table	accelerated-jk.txt	/*deceleration_table*
+enable_deceleration	accelerated-jk.txt	/*enable_deceleration*
+mode	accelerated-jk.txt	/*mode*

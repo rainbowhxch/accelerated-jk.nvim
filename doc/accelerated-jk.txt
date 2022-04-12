@@ -1,0 +1,135 @@
+*accelerated-jk.txt*    Accelerate up/down movements
+
+Author     : rainbowhxch
+Github     : https://github.com/rainbowhxch/accelerated-jk
+
+Help for accelerated-jk.nvim                                   *accelerated-jk*
+
+1. Introduction                                   |accelerated-jk-introduction|
+2. Requirements                                   |accelerated-jk-requirements|
+3. Installation                                   |accelerated-jk-installation|
+4. Usage                                                 |accelerated-jk-usage|
+5. Modes                                                 |accelerated-jk-modes|
+6. Configuration                                 |accelerated-jk-configuration|
+7. License                                             |accelerated-jk-license|
+
+===============================================================================
+1. Introduction                                   *accelerated-jk-introduction*
+
+Accelerated-jk.nvim accelerates j/k movements' steps while j or k key is
+repeating.
+
+===============================================================================
+2. Requirements                                   *accelerated-jk-requirements*
+
+- Neovim latest stable version or nightly
+
+===============================================================================
+3. Installation                                   *accelerated-jk-installation*
+
+You can install `accelerated-jk.nvim` with your favorite package manager.
+
+`vim-plug`:
+>
+    Plug 'rainbowhxch/accelerated-jk.nvim'
+<
+`packer.nvim`:
+>
+    use { 'rainbowhxch/accelerated-jk.nvim' }
+<
+
+===============================================================================
+4. Usage                                                 *accelerated-jk-usage*
+
+After install, you can make acceleration work through mapping j/k to plugin's
+internal mappings.
+>
+    vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
+    vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
+<
+
+All internal mappings here:                           *accelerated-jk-mappings*
+
+<Plug>(accelerated_jk_j)
+<Plug>(accelerated_jk_k)
+Accelerated |j| or |k| movement
+
+<Plug>(accelerated_jk_gj)
+<Plug>(accelerated_jk_gk)
+Accelerated |gj| or |gk| movement
+
+===============================================================================
+5. Modes                                                 *accelerated-jk-modes*
+
+All modes acceleration step according to the setting |acceleration_table|.
+
+- *time_driven*: The default one. With this mode, if the interval of key-repeat
+takes more than |acceleration_limit| ms, the step is reset. If you want to
+decelerate up/down moving by time instead of reset, set |enable_deceleration|
+to 'true'. In addition, if you want to change deceleration rate, set
+|deceleration_table| to a proper value.
+
+- *position_driven*: Reset steps using only position determination. Not
+sensitive enough, the effect is not good as the |time_driven| mode.
+===============================================================================
+6. Configuration                                 *accelerated-jk-configuration*
+
+If you stasify the default configuration, nothing is need to changed. Otherwise
+you can call 'require("accelerated-jk").setup()' to change the behavior of
+acceleration. The default configuration is:
+>
+    require('accelerated-jk').setup({
+        mode = 'time_driven',
+        enable_deceleration = false,
+        acceleration_limit = 150,
+        acceleration_table = { 7,12,17,21,24,26,28,30 },
+        deceleration_table = { {150, 9999} }
+    })
+<
+
+All configuration is here:
+*mode*                   string (default: 'time_driven')
+Acceleration modes.
+Values: |time_driven|, |position_driven|
+
+*enable_deceleration*    bool (default: false)
+Whether to enable deceleration.
+
+*acceleration_limit*     int (default: 150)
+The acceleration limit for |time_driven| mode.
+
+*acceleration_table*     table (default: {7,12,17,21,24,26,28,30})
+Step will adjust with this table when accelerating. Indexs represent steps of
+j/k mappings, values represent required number of typing j/k to advance steps.
+
+*deceleration_table*     table (default: { {150, 9999} })
+Step will adjust with this table when decelerating. Every element is a pair
+which the first element is elapsed time after last j/k typed and the second
+element is the count to decelerate steps.
+
+===============================================================================
+7. Copyright                                           *accelerated-jk-license*
+
+This plugin is distributed under MIT License.
+
+    Copyright (c) 2022, rainbowhxch
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+===============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
