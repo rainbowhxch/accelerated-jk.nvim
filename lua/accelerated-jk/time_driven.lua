@@ -40,7 +40,7 @@ function TimeDrivenAcceleration:get_acceleration_step()
             return idx
         end
     end
-    return len
+    return len + 1
 end
 
 function TimeDrivenAcceleration:move_to(movement)
