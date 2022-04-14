@@ -11,7 +11,7 @@ Help for accelerated-jk.nvim                                   *accelerated-jk*
 4. Usage                                                 |accelerated-jk-usage|
 5. Modes                                                 |accelerated-jk-modes|
 6. Configuration                                 |accelerated-jk-configuration|
-7. License                                             |accelerated-jk-license|
+7. Copyright					     |accelerated-jk-copyright|
 
 ===============================================================================
 1. Introduction                                   *accelerated-jk-introduction*
@@ -108,7 +108,7 @@ which the first element is elapsed time after last j/k typed and the second
 element is the count to decelerate steps.
 
 ===============================================================================
-7. Copyright                                           *accelerated-jk-license*
+7. Copyright                                         *accelerated-jk-copyright*
 
 This plugin is distributed under MIT License.
 

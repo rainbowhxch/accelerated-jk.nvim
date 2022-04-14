@@ -3,10 +3,12 @@ local TimeDrivenAcceleration = {}
 function TimeDrivenAcceleration:new(config)
     local o = {
         key_count = 0,
-        j_timestamp = {0, 0},
-        k_timestamp = {0, 0},
-        gj_timestamp = {0, 0},
-        gk_timestamp = {0, 0},
+        previous_timestamp = {
+            j = {0, 0},
+            k = {0, 0},
+            gj = {0, 0},
+            gk = {0, 0},
+        },
         acceleration_table = config.acceleration_table,
         deceleration_table = config.deceleration_table,
         end_of_count = config.acceleration_table[#config.acceleration_table],
@@ -15,30 +17,6 @@ function TimeDrivenAcceleration:new(config)
     setmetatable(o, self)
     self.__index = self
     return o
-end
-
-function TimeDrivenAcceleration:get_previous_timestamp(movement)
-    if movement == 'j' then
-        return self.j_timestamp
-    elseif movement == 'k' then
-        return self.k_timestamp
-    elseif movement == 'gj' then
-        return self.gj_timestamp
-    elseif movement == 'gk' then
-        return self.gk_timestamp
-    end
-end
-
-function TimeDrivenAcceleration:set_previous_timestamp(movement, new_timestamp)
-    if movement == 'j' then
-        self.j_timestamp = new_timestamp
-    elseif movement == 'k' then
-        self.k_timestamp = new_timestamp
-    elseif movement == 'gj' then
-        self.gj_timestamp = new_timestamp
-    elseif movement == 'gk' then
-        self.gk_timestamp = new_timestamp
-    end
 end
 
 function TimeDrivenAcceleration:decelerate(delay)
@@ -71,7 +49,7 @@ function TimeDrivenAcceleration:move_to(movement)
         vim.api.nvim_command('normal! ' .. step .. movement)
         return
     end
-    local previous_timestamp = self:get_previous_timestamp(movement)
+    local previous_timestamp = self.previous_timestamp[movement]
     local current_timestamp = vim.fn.reltime()
     local delta = vim.fn.split(vim.fn.reltimestr(vim.fn.reltime(previous_timestamp, current_timestamp)), '\\.')
     local msec = tonumber(delta[1] .. string.sub(delta[2], 1, 3))
@@ -83,7 +61,7 @@ function TimeDrivenAcceleration:move_to(movement)
     if self.key_count < self.end_of_count then
         self.key_count = self.key_count + 1
     end
-    self:set_previous_timestamp(movement, current_timestamp)
+    self.previous_timestamp[movement] = current_timestamp
 end
 
 return TimeDrivenAcceleration
