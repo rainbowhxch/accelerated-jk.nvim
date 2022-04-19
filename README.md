@@ -46,6 +46,7 @@ require('accelerated-jk').setup({
     enable_deceleration = false,
     acceleration_limit = 150,
     acceleration_table = { 7,12,17,21,24,26,28,30 },
+    -- when 'enable_deceleration = true', 'deceleration_table = { {200, 3}, {300, 7}, {450, 11}, {600, 15}, {750, 21}, {900, 9999} }'
     deceleration_table = { {150, 9999} }
 })
 ```
@@ -57,8 +58,8 @@ All configuration is here:
 | `mode`                | 'time_driven' or 'position_driven' | Acceleration modes                                                                                                                                                                                |
 | `enable_deceleration` | Boolean                            | Whether to enable deceleration                                                                                                                                                                   |
 | `acceleration_limit`  | Integer                            | The accelerated limit for `time_driven` mode                                                                                                                                                     |
-| `acceleration_table`  | List                               | Step will adjust with this table when accelerating. Indexs represent steps of j/k mappings, values represent required number of typing j/k to advance steps                                      |
-| `deceleration_table`  | List                               | Step will adjust with this table when decelerating. Every element is a pair which the first element is elapsed time after last j/k typed and the second element is the count to decelerate steps |
+| `acceleration_table`  | List                               | Indexs represent steps of j/k mappings, values represent required number of typing j/k to advance steps. In the case of {5, 15, 29}, if j is hited: 1)less than 5 times, the acceleration step is 1, 2)more than 5 times and less than 15 times, the acceleration steps is 2, 3)more than 15 times and less than 29 times, the acceleration steps is 3, 4)and after 29 j hits, the acceleration steps is 4. |
+| `deceleration_table`  | List                               | Every element is a pair which the first element is elapsed time after last j/k typed and the second element is the count to decelerate steps. In the case of {{200, 3}, {300, 7}}, if the elapsed time: 1)less than 200ms, the deceleration step is 1, 2)more than 200ms and less than 300ms, the deceleration steps is 3, 3)more than 300ms, then deceleration steps is 7. |
 
 ## Copyright
 This plugin is distributed under MIT License.
