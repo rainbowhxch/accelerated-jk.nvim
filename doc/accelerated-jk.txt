@@ -61,21 +61,22 @@ Accelerated |gj| or |gk| movement
 ===============================================================================
 5. Modes                                                 *accelerated-jk-modes*
 
-All modes acceleration step according to the setting |acceleration_table|.
-
-- *time_driven*: The default one. With this mode, if the interval of key-repeat
-takes more than |acceleration_limit| ms, the step is reset. If you want to
-decelerate up/down moving by time instead of reset, set |enable_deceleration|
+All modes acceleration step according to the setting `acceleration_table`.
+					     *accelerated-jk-modes.time_driven*
+- time_driven: The default one. With this mode, if the interval of key-repeat
+takes more than `acceleration_limit` ms, the step is reset. If you want to
+decelerate up/down moving by time instead of reset, set `enable_deceleration`
 to 'true'. In addition, if you want to change deceleration rate, set
-|deceleration_table| to a proper value.
+`deceleration_table` to a proper value.
+				         *accelerated-jk-modes.position_driven*
+- position_driven: Reset steps using only position determination. Not
+sensitive enough, the effect is not good as the `time_driven` mode.
 
-- *position_driven*: Reset steps using only position determination. Not
-sensitive enough, the effect is not good as the |time_driven| mode.
 ===============================================================================
 6. Configuration                                 *accelerated-jk-configuration*
 
 If you stasify the default configuration, nothing is need to changed. Otherwise
-you can call 'require("accelerated-jk").setup()' to change the behavior of
+you can call `require("accelerated-jk").setup()` to change the behavior of
 acceleration. The default configuration is:
 >
     require('accelerated-jk').setup({
@@ -88,21 +89,22 @@ acceleration. The default configuration is:
 <
 
 All configuration is here:
-*mode*                   string (default: 'time_driven')
+       						     *accelerated-jk-conf.mode*
+mode                   string (default: 'time_driven')
 Acceleration modes.
-Values: |time_driven|, |position_driven|
-
-*enable_deceleration*    bool (default: false)
+Values: 'time_driven', 'position_driven'
+   				      *accelerated-jk-conf.enable_deceleration*
+enable_deceleration    bool (default: false)
 Whether to enable deceleration.
-
-*acceleration_limit*     int (default: 150)
-The acceleration limit for |time_driven| mode.
-
-*acceleration_table*     table (default: {7,12,17,21,24,26,28,30})
+				       *accelerated-jk-conf.acceleration_limit*
+acceleration_limit     int (default: 150)
+The acceleration limit for 'time_driven' mode.
+		*		       *accelerated-jk-conf.acceleration_table*
+acceleration_table     table (default: {7,12,17,21,24,26,28,30})
 Step will adjust with this table when accelerating. Indexs represent steps of
 j/k mappings, values represent required number of typing j/k to advance steps.
-
-*deceleration_table*     table (default: { {150, 9999} })
+    				       *accelerated-jk-conf.deceleration_table*
+deceleration_table     table (default: { {150, 9999} })
 Step will adjust with this table when decelerating. Every element is a pair
 which the first element is elapsed time after last j/k typed and the second
 element is the count to decelerate steps.
