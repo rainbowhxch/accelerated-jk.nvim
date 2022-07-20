@@ -12,21 +12,15 @@ local create_driver = function(config)
   end
 end
 
-M.reset_key_count = function()
-  driver:reset_key_count()
-end
-
-M.move_to = function(movement)
-  driver:move_to(movement)
-end
-
-M.setup = function(opts)
-  if initialized then
-    return
+local create_keymaps = function(config)
+  for _, motion in ipairs(config.acceleration_motions) do
+    vim.api.nvim_set_keymap(
+      'n',
+      motion,
+      string.format("<CMD>lua require'accelerated-jk'.move_to('%s')<CR>", motion),
+      { silent = true, noremap = true }
+    )
   end
-
-  local config = conf_module.merge_config(opts)
-  driver = create_driver(config)
   vim.api.nvim_set_keymap(
     'n',
     '<Plug>(accelerated_jk_j)',
@@ -51,6 +45,24 @@ M.setup = function(opts)
     "<CMD>lua require'accelerated-jk'.move_to('gk')<CR>",
     { silent = true, noremap = true }
   )
+end
+
+M.reset_key_count = function()
+  driver:reset_key_count()
+end
+
+M.move_to = function(movement)
+  driver:move_to(movement)
+end
+
+M.setup = function(opts)
+  if initialized then
+    return
+  end
+
+  local config = conf_module.merge_config(opts)
+  driver = create_driver(config)
+  create_keymaps(config)
 
   initialized = true
 end

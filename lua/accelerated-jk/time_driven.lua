@@ -3,12 +3,7 @@ local TimeDrivenAcceleration = {}
 function TimeDrivenAcceleration:new(config)
   local o = {
     key_count = 0,
-    previous_timestamp = {
-      j = { 0, 0 },
-      k = { 0, 0 },
-      gj = { 0, 0 },
-      gk = { 0, 0 },
-    },
+    previous_timestamp = {},
     acceleration_table = config.acceleration_table,
     deceleration_table = config.deceleration_table,
     end_of_count = config.acceleration_table[#config.acceleration_table],
@@ -49,7 +44,7 @@ function TimeDrivenAcceleration:move_to(movement)
     vim.api.nvim_command('normal! ' .. step .. movement)
     return
   end
-  local previous_timestamp = self.previous_timestamp[movement]
+  local previous_timestamp = self.previous_timestamp[movement] or {0, 0}
   local current_timestamp = vim.fn.reltime()
   local delta = vim.fn.split(vim.fn.reltimestr(vim.fn.reltime(previous_timestamp, current_timestamp)), '\\.')
   local msec = tonumber(delta[1] .. string.sub(delta[2], 1, 3))
