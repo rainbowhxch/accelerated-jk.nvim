@@ -67,10 +67,12 @@ All modes acceleration step according to the setting `acceleration_table`.
 takes more than `acceleration_limit` ms, the step is reset. If you want to
 decelerate up/down moving by time instead of reset, set `enable_deceleration`
 to 'true'. In addition, if you want to change deceleration rate, set
-`deceleration_table` to a proper value.
+`deceleration_table` to a proper value. Even better, you can accelerate other
+movements (such as |w|, |b|) through `acceleration_motions`.
 				         *accelerated-jk-modes.position_driven*
 - position_driven: Reset steps using only position determination. Not
-sensitive enough, the effect is not good as the `time_driven` mode.
+sensitive enough, the effect is not good as the `time_driven` mode. Note that
+`acceleration_motions` isn't supported by this mode.
 
 ===============================================================================
 6. Configuration                                 *accelerated-jk-configuration*
@@ -82,6 +84,7 @@ acceleration. The default configuration is:
     require('accelerated-jk').setup({
         mode = 'time_driven',
         enable_deceleration = false,
+	acceleration_motions = {},
         acceleration_limit = 150,
         acceleration_table = { 7,12,17,21,24,26,28,30 },
         deceleration_table = { {150, 9999} }
@@ -96,6 +99,9 @@ Values: 'time_driven', 'position_driven'
    				      *accelerated-jk-conf.enable_deceleration*
 enable_deceleration    bool (default: false)
 Whether to enable deceleration.
+				     *accelerated-jk-conf.acceleration_motions*
+acceleration_motions   table (default: {})
+The additional acceleration motions for 'time_driven' mode.
 				       *accelerated-jk-conf.acceleration_limit*
 acceleration_limit     int (default: 150)
 The acceleration limit for 'time_driven' mode.

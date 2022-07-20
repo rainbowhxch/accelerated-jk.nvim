@@ -1,5 +1,6 @@
 accelerated-jk	accelerated-jk.txt	/*accelerated-jk*
 accelerated-jk-conf.acceleration_limit	accelerated-jk.txt	/*accelerated-jk-conf.acceleration_limit*
+accelerated-jk-conf.acceleration_motions	accelerated-jk.txt	/*accelerated-jk-conf.acceleration_motions*
 accelerated-jk-conf.acceleration_table	accelerated-jk.txt	/*accelerated-jk-conf.acceleration_table*
 accelerated-jk-conf.deceleration_table	accelerated-jk.txt	/*accelerated-jk-conf.deceleration_table*
 accelerated-jk-conf.enable_deceleration	accelerated-jk.txt	/*accelerated-jk-conf.enable_deceleration*
