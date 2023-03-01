@@ -1,0 +1,1 @@
+require('accelerated-jk').setup()

@@ -1,19 +1,18 @@
 local M = {}
 
 local driver = nil
-local conf_module = require('accelerated-jk.config')
-local initialized = false
+local config_module = require('accelerated-jk.config')
 
-local create_driver = function(config)
-  if config.mode == 'time_driven' then
-    return require('accelerated-jk.time_driven'):new(config)
+local create_driver = function()
+  if config_module.items.mode == 'time_driven' then
+    return require('accelerated-jk.time_driven'):new(config_module.items)
   else
-    return require('accelerated-jk.position_driven'):new(config)
+    return require('accelerated-jk.position_driven'):new(config_module.items)
   end
 end
 
-local create_keymaps = function(config)
-  for _, motion in ipairs(config.acceleration_motions) do
+local create_keymaps = function()
+  for _, motion in ipairs(config_module.items.acceleration_motions) do
     vim.api.nvim_set_keymap(
       'n',
       motion,
@@ -21,30 +20,20 @@ local create_keymaps = function(config)
       { silent = true, noremap = true }
     )
   end
-  vim.api.nvim_set_keymap(
-    'n',
-    '<Plug>(accelerated_jk_j)',
-    "<CMD>lua require'accelerated-jk'.move_to('j')<CR>",
-    { silent = true, noremap = true }
-  )
-  vim.api.nvim_set_keymap(
-    'n',
-    '<Plug>(accelerated_jk_k)',
-    "<CMD>lua require'accelerated-jk'.move_to('k')<CR>",
-    { silent = true, noremap = true }
-  )
-  vim.api.nvim_set_keymap(
-    'n',
-    '<Plug>(accelerated_jk_gj)',
-    "<CMD>lua require'accelerated-jk'.move_to('gj')<CR>",
-    { silent = true, noremap = true }
-  )
-  vim.api.nvim_set_keymap(
-    'n',
-    '<Plug>(accelerated_jk_gk)',
-    "<CMD>lua require'accelerated-jk'.move_to('gk')<CR>",
-    { silent = true, noremap = true }
-  )
+  local keymaps = {
+    ['<Plug>(accelerated_jk_j)'] = "<CMD>lua require'accelerated-jk'.move_to('j')<CR>",
+    ['<Plug>(accelerated_jk_k)'] = "<CMD>lua require'accelerated-jk'.move_to('k')<CR>",
+    ['<Plug>(accelerated_jk_gj)'] = "<CMD>lua require'accelerated-jk'.move_to('gj')<CR>",
+    ['<Plug>(accelerated_jk_gk)'] = "<CMD>lua require'accelerated-jk'.move_to('gk')<CR>"
+  }
+  for keymap, motion in pairs(keymaps) do
+    vim.api.nvim_set_keymap(
+      'n',
+      keymap,
+      motion,
+      { silent = true, noremap = true }
+    )
+  end
 end
 
 M.reset_key_count = function()
@@ -56,15 +45,9 @@ M.move_to = function(movement)
 end
 
 M.setup = function(opts)
-  if initialized then
-    return
-  end
-
-  local config = conf_module.merge_config(opts)
-  driver = create_driver(config)
-  create_keymaps(config)
-
-  initialized = true
+  config_module.merge_config(opts)
+  driver = create_driver()
+  create_keymaps()
 end
 
 return M
